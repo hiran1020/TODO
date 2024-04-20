@@ -1,22 +1,22 @@
-// /**
-//  * Sample React Native App
-//  * https://github.com/facebook/react-native
-//  *
-//  * @format
-//  */
-
 import React from 'react';
 import Task from './component/Task.js';
 import Greeting from './component/Greeting.js';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+
+
+const Stack = createStackNavigator();
 
 
 
 export default App = () => {
   return(
-    <>
-    <Greeting />
-    
-    <Task />
-    </>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen  name="Home" component={Greeting} options={{ headerShown: false }} />
+        <Stack.Screen name="NewTask" component={Task}  options={{ headerShown: false }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }

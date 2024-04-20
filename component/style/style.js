@@ -2,6 +2,7 @@
  const styles = StyleSheet.create({
     ///Task component style
     sectionTitle: {
+      color: 'black',
       fontSize: 30,
       fontWeight: '600',
       paddingHorizontal: 10,
@@ -33,7 +34,7 @@
     add:{
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor:'#87CEEB',
+        backgroundColor:'#9A2BE1',
         width: 40,
         height: 40,
         borderRadius: 50,
@@ -50,7 +51,7 @@
     },
     ////greeting component style
     greeting:{
-        color: 'white',
+        color: 'black',
         borderRadius: 5,
         alignItems: 'center',
         fontSize: 30,
@@ -61,29 +62,58 @@
     },
     date:{
         flex: 0.6,
-        backgroundColor:'#9400D3',
+        marginBottom:5,
+        backgroundColor:'#9A2BE1',
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomLeftRadius: 25,
         borderBottomRightRadius: 25,
     },
     dataIn:{
-        width:'100%',
+        width:'99%',
         borderBottomLeftRadius:25,
         alignItems:'center',
         borderBottomEndRadius: 25, 
         backgroundColor:'#9A0BE0'},
         
     text:{
-        borderRadius: 5,
+        color: 'black',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: 40,
-        padding: 10,
-        marginBottom:5,
+        fontSize: 35,
+        padding:5,
+        marginBottom:10,
         fontWeight: '600',
+        top:20,
     },
-    ////swipe left 
+    textTask:{
+      color: 'black',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: 20,
+      padding:5,
+      marginBottom:10,
+      fontWeight: '600',
+      top:20,
+    },
+    textView:{
+      color: 'black',
+      justifyContent: 'center',
+      alignItems: 'center',
+      fontSize: 20,
+      padding:5,
+      marginBottom:10,
+      fontWeight: '600',
+      top:5,
+    },
+    taskView:{
+      backgroundColor: '#9A2BE1',
+      width: 200,
+      height: 50,
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -95,6 +125,9 @@
         backgroundColor: '#87CEEB',
         justifyContent: 'center',
         alignItems: 'center',
+      },
+      stack:{
+        backgroundColor: 'black',
       }
   });
  
