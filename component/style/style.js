@@ -40,8 +40,18 @@
         borderRadius: 50,
         borderWidth: 1,
         borderColor: 'black',
-    
    },
+   home:{
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor:'#9A2BE1',
+    width: 40,
+    height: 40,
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: 'black',
+    top: 5,
+},
    textAdd:{
       color: 'black',
       fontWeight: 'bold',
@@ -120,11 +130,12 @@
         alignItems: 'center',
       },
       box: {
-        width: 200,
-        height: 200,
+        flex: 1,
         backgroundColor: '#87CEEB',
         justifyContent: 'center',
         alignItems: 'center',
+        textAlignment:'center',
+        borderRadius: 10,
       },
       stack:{
         backgroundColor: 'black',

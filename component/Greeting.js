@@ -86,7 +86,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
             </View>
             <View style={styles.container}>
                 <TouchableOpacity onPress={goToNewTask} style={styles.taskView}>
-                    <Text style={styles.textView}>View New Task</Text>
+                    <Text style={styles.textView}>View  Task</Text>
                 </TouchableOpacity>
             </View>
          </>

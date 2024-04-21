@@ -8,6 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 const Task = () => {
     const [taskName, setTaskName] = useState('');
     const [tasks, setTasks] = useState([]);
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [uncompletedTasks, setUncompletedTasks] = useState([]);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -20,7 +22,10 @@ const Task = () => {
             // Retrieve tasks from AsyncStorage
             const storedTasks = await AsyncStorage.getItem('tasks');
             if (storedTasks !== null) {
-                setTasks(JSON.parse(storedTasks));
+                const parsedTasks = JSON.parse(storedTasks);
+                setTasks(parsedTasks);
+                setCompletedTasks(parsedTasks.filter(task => task.completed));
+                setUncompletedTasks(parsedTasks.filter(task => !task.completed));
             }
         } catch (error) {
             console.error('Error loading tasks:', error);
@@ -35,17 +40,21 @@ const Task = () => {
             console.error('Error saving tasks:', error);
         }
     };
-    const goToHome = () => {
-      navigation.navigate('Home');
-    };    
-    
 
+    const goToHome = () => {
+        navigation.navigate('Home');
+    };
+
+    const goToTaskDetails = (task) => {
+        navigation.navigate('Details', { task });
+    };
+    
     const handleDelete = (item) => {
         const updatedTasks = tasks.filter(task => task.id !== item.id);
         setTasks(updatedTasks);
         saveTasks(updatedTasks);
     };
-    
+
     const setComplete = (task) => {
         const updatedTasks = tasks.map(t => {
             if (t.id === task.id) {
@@ -55,6 +64,8 @@ const Task = () => {
         });
         setTasks(updatedTasks);
         saveTasks(updatedTasks);
+        setCompletedTasks(updatedTasks.filter(task => task.completed));
+        setUncompletedTasks(updatedTasks.filter(task => !task.completed));
     };
 
     const addTask = () => {
@@ -69,49 +80,85 @@ const Task = () => {
         const updatedTasks = [...tasks, newTask];
         setTasks(updatedTasks);
         saveTasks(updatedTasks);
+        setCompletedTasks(updatedTasks.filter(task => task.completed));
+        setUncompletedTasks(updatedTasks.filter(task => !task.completed));
         setTaskName('');
         Keyboard.dismiss();
-      };
-      
+    };
+
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginRight: 5 }}>
-                <Text style={styles.sectionTitle}>Today's Scheduled </Text>
-                <TouchableOpacity style={styles.add} onPress={goToHome}>
+                <Text style={styles.sectionTitle}>Today's Scheduled</Text>
+                <TouchableOpacity style={styles.home} onPress={goToHome}>
                     <Icon name="arrow-left" size={35} color="black" />
                 </TouchableOpacity>
             </View>
 
-            <FlatList
-                style={styles.items}
-                data={tasks}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={{ backgroundColor: "#9A1CE0", marginHorizontal: 20, borderRadius: 5, marginTop: 5 }}
-                        onLongPress={() => setComplete(item)}
-                    >
-                        <Text style={[{ paddingHorizontal: 20, paddingVertical: 5 }, item.completed ? { textDecorationLine: 'line-through', textDecorationColor: 'black' } : {}]}>
-                            {item.name}
-                        </Text>
-                    </TouchableOpacity>
-                )}
-                keyExtractor={(item) => item.id.toString()}
-            />
+
+            <View style={{ flex: 1 }}>
+
+
+
+            <View style={{ flex: 1 }}>
+                <Text style={styles.sectionTitle}>Uncompleted Tasks</Text>
+                <FlatList
+                    style={styles.items}
+                    data={uncompletedTasks}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={{ backgroundColor: "#9A1CE0", marginHorizontal: 10, borderRadius: 5, marginTop: 5 }}
+                            onLongPress={() => setComplete(item)} 
+                            onPress={() => goToTaskDetails(item)}
+                        >
+                            <Text style={[{ paddingHorizontal: 20, paddingVertical: 5 }, item.completed ? { textDecorationLine: 'line-through', textDecorationColor: 'black' } : {}]}>
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                />
+            </View>
+
+            <View style={{ flex: 1 }}>
+                <Text style={styles.sectionTitle}>Completed Tasks</Text>
+                <FlatList
+                    style={styles.items}
+                    data={completedTasks}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity
+                            style={{ backgroundColor: "#9A1CE0", marginHorizontal: 10, borderRadius: 5, marginTop: 5 }}
+                            onLongPress={() => setComplete(item)}
+                            onPress={() => goToTaskDetails(item)}
+                        >
+                            <Text style={[{ paddingHorizontal: 20, paddingVertical: 5 }, item.completed ? { textDecorationLine: 'line-through', textDecorationColor: 'black' } : {}]}>
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+                    keyExtractor={(item) => item.id.toString()}
+                />
+
+            </View>
+            
+               
+               
+                </View>
 
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? 'padding' : 'height'} style={styles.keyboard}>
                 <TextInput
                     style={styles.input}
-                    placeholder="What's your today's schedule "
                     value={taskName}
                     onChangeText={(name) => setTaskName(name)}
                 />
                 <TouchableOpacity onPress={addTask}>
                     <View style={styles.add}>
-                        <Text style={styles.textAdd}> + </Text>
+                        <Text style={styles.textAdd}>+</Text>
                     </View>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
         </View>
     );
 };
+
 export default Task;
