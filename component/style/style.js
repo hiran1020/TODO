@@ -1,4 +1,7 @@
  import { StyleSheet } from "react-native";
+const $brand = '#9A2BE1';
+
+
  const styles = StyleSheet.create({
     ///Task component style
     sectionTitle: {
@@ -15,7 +18,8 @@
       alignSelf: 'center',
     },
     input:{
-      color: 'black'
+      color: 'black',
+      width:'90%',
     },
     keyboard: {
       position: 'absolute',
@@ -34,7 +38,7 @@
     add:{
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor:'#9A2BE1',
+        backgroundColor:$brand,
         width: 40,
         height: 40,
         borderRadius: 50,
@@ -44,7 +48,7 @@
    home:{
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor:'#9A2BE1',
+    backgroundColor:$brand,
     width: 40,
     height: 40,
     borderRadius: 50,
@@ -73,7 +77,7 @@
     date:{
         flex: 0.6,
         marginBottom:5,
-        backgroundColor:'#9A2BE1',
+        backgroundColor:$brand,
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomLeftRadius: 25,
@@ -84,7 +88,8 @@
         borderBottomLeftRadius:25,
         alignItems:'center',
         borderBottomEndRadius: 25, 
-        backgroundColor:'#9A0BE0'},
+        backgroundColor:'#9A0BE0'
+      },
         
     text:{
         color: 'black',
@@ -117,7 +122,7 @@
       top:5,
     },
     taskView:{
-      backgroundColor: '#9A2BE1',
+      backgroundColor: $brand,
       width: 200,
       height: 50,
       borderRadius: 10,
@@ -131,7 +136,6 @@
       },
       box: {
         flex: 1,
-        backgroundColor: '#87CEEB',
         justifyContent: 'center',
         alignItems: 'center',
         textAlignment:'center',
@@ -139,8 +143,41 @@
       },
       stack:{
         backgroundColor: 'black',
-      }
+      },
+      modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      modalInput: {
+        width: '80%',
+        height: 40,
+        backgroundColor: 'black',
+        marginBottom: 10,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+        color: 'white',
+        fontSize: 18,
+      },
+      modalButton: {
+        backgroundColor: '#9A2BE1',
+        width: '70%',
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+        padding: 10,
+        borderRadius: 5,
+        marginTop: 10,
+      },
+      modalButtonText: {
+        color: 'black',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 20,
+      },
   });
+  
  
  
  

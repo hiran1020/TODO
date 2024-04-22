@@ -7,7 +7,7 @@ const MyDatePicker = () => {
   const [showPicker, setShowPicker] = useState(false);
 
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+    const currentDate = selectedDate || datetime;
     setShowPicker(Platform.OS === 'ios');
     setDate(currentDate);
   };
@@ -19,7 +19,7 @@ const MyDatePicker = () => {
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
-          mode="date"
+          mode="datetime"
           is24Hour={true}
           display="default"
           onChange={onChange}

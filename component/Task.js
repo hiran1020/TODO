@@ -12,10 +12,31 @@ const Task = () => {
     const [uncompletedTasks, setUncompletedTasks] = useState([]);
     const navigation = useNavigation();
 
-    useEffect(() => {
-        // Load tasks from AsyncStorage when component mounts
-        loadTasks();
-    }, []);
+
+
+
+    const getEndOfDay = () => {
+        const endOfDay = new Date();
+        endOfDay.setHours(23, 59, 59, 999); // Set time to end of the day
+      
+        const options = {
+          year: 'numeric',
+          month: 'short',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true // Use 24-hour format
+        };
+      
+        return endOfDay.toLocaleString('en-US', options);
+      };
+    
+
+
+
+
+
+
 
     const loadTasks = async () => {
         try {
@@ -32,6 +53,44 @@ const Task = () => {
         }
     };
 
+
+
+    useEffect(() => {
+        loadTasks();
+    }, []);
+
+
+
+
+
+
+
+
+
+
+    const addTask = () => {
+        if (taskName.trim() === '') {
+            return;
+        }
+        
+        console.log(getEndOfDay([]))
+        const newTask = {
+            id: tasks.length + 1,
+            name: taskName,
+            completed: false,
+            dueDate: getEndOfDay([]),
+        };
+        const updatedTasks = [...tasks, newTask];
+        setTasks(updatedTasks);
+        saveTasks(updatedTasks);
+        setCompletedTasks(updatedTasks.filter(task => task.completed));
+        setUncompletedTasks(updatedTasks.filter(task => !task.completed));
+        setTaskName('');
+        Keyboard.dismiss();
+    };
+  
+
+
     const saveTasks = async (newTasks) => {
         try {
             // Save tasks to AsyncStorage
@@ -41,19 +100,48 @@ const Task = () => {
         }
     };
 
+
+
+
+
+
+
+
     const goToHome = () => {
         navigation.navigate('Home');
     };
 
+
+
+
+
+
+
+
     const goToTaskDetails = (task) => {
+        console.log(task);
         navigation.navigate('Details', { task });
+
     };
+
+
+
+
+
+
     
     const handleDelete = (item) => {
         const updatedTasks = tasks.filter(task => task.id !== item.id);
         setTasks(updatedTasks);
         saveTasks(updatedTasks);
     };
+
+
+
+
+
+
+
 
     const setComplete = (task) => {
         const updatedTasks = tasks.map(t => {
@@ -68,23 +156,16 @@ const Task = () => {
         setUncompletedTasks(updatedTasks.filter(task => !task.completed));
     };
 
-    const addTask = () => {
-        if (taskName.trim() === '') {
-            return;
-        }
-        const newTask = {
-            id: tasks.length + 1,
-            name: taskName,
-            completed: false
-        };
-        const updatedTasks = [...tasks, newTask];
-        setTasks(updatedTasks);
-        saveTasks(updatedTasks);
-        setCompletedTasks(updatedTasks.filter(task => task.completed));
-        setUncompletedTasks(updatedTasks.filter(task => !task.completed));
-        setTaskName('');
-        Keyboard.dismiss();
-    };
+
+
+
+
+
+
+
+
+
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -107,11 +188,11 @@ const Task = () => {
                     data={uncompletedTasks}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            style={{ backgroundColor: "#9A1CE0", marginHorizontal: 10, borderRadius: 5, marginTop: 5 }}
+                            style={{ backgroundColor: "#9A1CE0", borderRadius: 5, marginTop: 5,height: 35 }}
                             onLongPress={() => setComplete(item)} 
                             onPress={() => goToTaskDetails(item)}
                         >
-                            <Text style={[{ paddingHorizontal: 20, paddingVertical: 5 }, item.completed ? { textDecorationLine: 'line-through', textDecorationColor: 'black' } : {}]}>
+                            <Text style={[{ paddingHorizontal: 20, paddingVertical: 10,alignContent: 'center',alignItems: 'center' }, item.completed ? { textDecorationLine: 'line-through', textDecorationColor: 'black' } : {}]}>
                                 {item.name}
                             </Text>
                         </TouchableOpacity>
